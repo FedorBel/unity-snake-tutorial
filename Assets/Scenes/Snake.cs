@@ -17,21 +17,36 @@ public class Snake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector2 expected_direction = _direction;
         if (Input.GetKeyDown(KeyCode.W))
         {
-            _direction = Vector2.up;
+            expected_direction = Vector2.up;
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            _direction = Vector2.down;
+            expected_direction = Vector2.down;
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            _direction = Vector2.left;
+            expected_direction = Vector2.left;
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            _direction = Vector2.right;
+            expected_direction = Vector2.right;
+        }
+
+        // can't make 180 turn when snake size > 1
+        bool enableDirectionChange = true;
+        if (_segments.Count > 1 &&
+         (this.transform.position.x + expected_direction.x == _segments[1].position.x ||
+          this.transform.position.y + expected_direction.y == _segments[1].position.y))
+        {
+            enableDirectionChange = false;
+        }
+
+        if (enableDirectionChange)
+        {
+            _direction = expected_direction;
         }
     }
 
