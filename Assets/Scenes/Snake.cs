@@ -37,9 +37,7 @@ public class Snake : MonoBehaviour
 
         // can't make 180 turn when snake size > 1
         bool enableDirectionChange = true;
-        if (_segments.Count > 1 &&
-         (this.transform.position.x + expected_direction.x == _segments[1].position.x ||
-          this.transform.position.y + expected_direction.y == _segments[1].position.y))
+        if (_segments.Count > 1 && expected_direction == -_direction)
         {
             enableDirectionChange = false;
         }
